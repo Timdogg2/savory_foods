@@ -1,7 +1,7 @@
 <?php
 
-    class about extends IndexView{
-        public function display($recipe, $confirm = "") {
+class about extends IndexView{
+        function display() {
             //display page header
             parent::displayHeader("Recipe Details");
     }
@@ -25,7 +25,8 @@
 
 <?php
         //display page footer
-        parent::displayFooter();
+parent::displayFooter();
+?>
     
 
 
