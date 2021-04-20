@@ -80,7 +80,7 @@ class RecipeModel
 
         //loop through all rows in the returned recordsets
         while ($obj = $query->fetch_object()) {
-            $recipe = new Recipe(stripslashes($obj->title), stripslashes($obj->description), stripslashes($obj->ingrediants), stripslashes($obj->price), stripslashes($obj->image));
+            $recipe = new Recipe(stripslashes($obj->title), stripslashes($obj->description), stripslashes($obj->ingrediants), stripslashes($obj->price), stripslashes($obj->Category_id), stripslashes($obj->image));
 
             //set the id for the recipe
             $recipe>setId($obj->id);
@@ -109,7 +109,7 @@ class RecipeModel
             $obj = $query->fetch_object();
 
             //create a recipe object
-            $recipe = new Recipe(stripslashes($obj->title), stripslashes($obj->description), stripslashes($obj->ingredients), stripslashes($obj->price), stripslashes($obj->image));
+            $recipe = new Recipe(stripslashes($obj->title), stripslashes($obj->description), stripslashes($obj->ingredients), stripslashes($obj->price), stripslashes($obj->Category_id), stripslashes($obj->image));
 
             //set the id for the recipe
             $recipe->setId($obj->id);
