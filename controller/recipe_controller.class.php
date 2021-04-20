@@ -13,13 +13,13 @@ class RecipeController{
     //default constructor
     public function __construct() {
         //create an instance of the MovieModel class
-        $this->recipe_model = MovieModel::getMovieModel();
+        $this->recipe_model = RecipeModel::getRecipeModel();
     }
 
     //index action that displays all movies
     public function index() {
         //retrieve all recipes and store them in an array
-        $recipes = $this->recipe_model->list_movie();
+        $recipes = $this->recipe_model->list_recipe();
 
         if (!$recipes) {
             //display an error
@@ -69,7 +69,7 @@ class RecipeController{
     //update a movie in the database
     public function update($id) {
         //update the recipe
-        $update = $this->recipe_model->update_movie($id);
+        $update = $this->recipe_model->update_recipe($id);
         if (!$update) {
             //handle errors
             $message = "There was a problem updating the recipe id='" . $id . "'.";
@@ -79,7 +79,7 @@ class RecipeController{
 
         //display the updateed recipe details
         $confirm = "The recipe was successfully updated.";
-        $recipe = $this->recipe_model->view_movie($id);
+        $recipe = $this->recipe_model->view_recipe($id);
 
         $view = new RecipeDetail();
         $view->display($recipe, $confirm);
