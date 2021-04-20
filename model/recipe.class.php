@@ -1,7 +1,7 @@
 <?php
 /**
- * Author: Sydney Weddell
- * Date: 4/15/2021
+ * Author: Tim Ware Jr.
+ * Date: 4/20/2021
  * File: recipe.class.php
  * Description:
  */
@@ -22,49 +22,60 @@ class Recipe
         $this->image = $image;
     }
 
-    //get the id of a book
     public function getId() {
         return $this->id;
     }
-
-    //get the title of a book
     public function getTitle() {
         return $this->title;
     }
 
-    //get the ISBN of a book
-    public function getIsbn() {
-        return $this->isbn;
+    public function getIngredients(){
+        return $this->ingredients;
     }
 
-    //get the category of a book
     public function getCategory() {
         return $this->category;
     }
 
-    //get the publish date of a book
-    public function getPublish_date() {
-        return $this->publish_date;
-    }
 
-    //get the publisher of a book
-    public function getPublisher() {
-        return $this->publisher;
-    }
-
-    //get the image file name of a book
     public function getImage() {
         return $this->image;
     }
 
-    //get the description of a book
     public function getDescription() {
         return $this->description;
     }
 
-    //set book id
-    public function setId($id) {
+    public function getPrice(){
+        return $this->price;
+    }
+
+
+
+    public function setId($id){
         $this->id = $id;
+    }
+    public function setCategory($category){
+        $this->category = $category;
+    }
+
+    public function setDescription($description){
+        $this->description = $description;
+    }
+
+    public function setImage($image){
+        $this->image = $image;
+    }
+    public function setIngredients($ingredients){
+        $this->ingredients = $ingredients;
+    }
+
+    public function setPrice($price){
+        $this->price = $price;
+    }
+
+    public function setTitle($title){
+        $this->title = $title;
     }
 
 }
