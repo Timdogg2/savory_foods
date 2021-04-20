@@ -43,8 +43,7 @@ class RecipeDetail extends RecipeIndexView
                     <p><strong>Ingredients:</strong></p>
                     <p><strong>Price:</strong></p>
                     <div id="button-group">
-                        <input type="button" id="edit-button" value="   Edit   "
-                               onclick="window.location.href = '<?= BASE_URL ?>/book/edit/<?= $id ?>'">&nbsp;
+                        <input type="button" id="edit-button" value="Edit"onclick="window.location.href = '<?= BASE_URL ?>/recipe/edit/<?= $id ?>'">&nbsp;
                     </div>
                 </td>
                 <td>
@@ -58,7 +57,7 @@ class RecipeDetail extends RecipeIndexView
                 </td>
             </tr>
         </table>
-        <a href="<?= BASE_URL ?>/Recipe/index">Go to recipe list</a>
+        <a href="<?= BASE_URL ?>/recipe/index">Go to recipe list</a>
 
         <?php
         //display page footer
