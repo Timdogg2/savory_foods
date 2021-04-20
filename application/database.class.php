@@ -47,17 +47,17 @@ class database
 }
 
     //returns the name of the table that stores movies
-    public function getMovieTable() {
+    public function getCategories() {
     return $this->param['tblCategories'];
 }
 
     //returns the name of the table that stores books
-    public function getBookTable() {
+    public function getRecipes() {
     return $this->param['tblRecipes'];
 }
 
     //returns the name of the table storing games
-    public function getGameTable() {
+    public function getUsers() {
     return $this->param['tblUsers'];
     }
 }
