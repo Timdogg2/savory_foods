@@ -151,7 +151,7 @@ class RecipeModel
 
         //loop through all rows in the returned recordsets
         while ($obj = $query->fetch_object()) {
-            $recipe = new Recipe($obj->title, $obj->description, $obj->ingredients, $obj->price, $obj->image);
+            $recipe = new Recipe($obj->title, $obj->description, $obj->ingredients, $obj->price,$obj->Category_id, $obj->image);
 
             //set the id for the recipe
             $recipes->setId($obj->id);
