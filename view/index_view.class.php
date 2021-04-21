@@ -9,16 +9,17 @@
 class IndexView
 {
     //this method displays the page header
-    static public function displayHeader() {
+    static public function displayHeader($page_title) {
     ?>
     <!DOCTYPE html>
     <html>
     <head>
+        <title><?php echo $page_title ?></title>
         <meta charset="UTF-8"/>
         <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
         <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
         <title>Savory Foods | Home</title>
-        <link rel="stylesheet" href='<? BASE_URL ?>css/styles.css'/>
+        <link rel="stylesheet" href='<? BASE_URL ?>/www/css/styles.css'/>
         <script>
             //create the JavaScript variable for the base url
             var base_url = "<?= BASE_URL ?>";
