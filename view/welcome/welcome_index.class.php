@@ -30,7 +30,7 @@ class WelcomeIndex extends IndexView
                 </td>
                 <td style="text-align: left">
                     <ul>
-                        <li>Search for Recipes/li>
+                        <li>Search for Recipes</li>
                         <li>Autosuggestion</li>
                         <li>Filter Recipes</li>
                         <li>Sort Recipes</li>
