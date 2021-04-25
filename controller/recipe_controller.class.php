@@ -19,7 +19,7 @@ class RecipeController{
     //index action that displays all movies
     public function index() {
         //retrieve all recipes and store them in an array
-        $recipes = $this->recipe_model->list_recipe();
+        $recipes = $this->recipe_model->list_recipes();
 
         if (!$recipes) {
             //display an error
@@ -33,7 +33,7 @@ class RecipeController{
         $view->display($recipes);
     }
 
-    //show details of a movie
+    //show details of a recipe
     public function detail($id) {
         //retrieve the specific recipe
         $recipe = $this->recipe_model->view_recipe($id);
@@ -50,7 +50,7 @@ class RecipeController{
         $view->display($recipe);
     }
 
-    //display a movie in a form for editing
+    //display a recipe in a form for editing
     public function edit($id) {
         //retrieve the specific recipe
         $recipe = $this->recipe_model->view_recipe($id);
@@ -69,7 +69,7 @@ class RecipeController{
     //update a movie in the database
     public function update($id) {
         //update the recipe
-        $update = $this->recipe_model->update_recipe($id);
+        $update = $this->recipe_model->update_recipies($id);
         if (!$update) {
             //handle errors
             $message = "There was a problem updating the recipe id='" . $id . "'.";
@@ -116,14 +116,14 @@ class RecipeController{
         $recipes = $this->recipe_model->search_recipe($query_terms);
 
         //retrieve all recipe titles and store them in an array
-        $titles = array();
+        $Titles = array();
         if ($recipes) {
             foreach ($recipes as $recipe) {
-                $titles[] = $recipe->getTitle();
+                $Titles[] = $recipe->getTitle();
             }
         }
 
-        echo json_encode($titles);
+        echo json_encode($Titles);
     }
 
     //handle an error

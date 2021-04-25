@@ -6,7 +6,7 @@
  * Description:
  */
 
-class dispatcher
+class Dispatcher
 {
 
     public function __construct() {

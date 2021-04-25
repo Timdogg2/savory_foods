@@ -1,3 +1,3 @@
 <?php
-$con = mysqli_connect('localhost', 'root', '', 'savory_foods');
-?>
+//$con = mysqli_connect('localhost', 'root', '', 'savory_foods');
+//?>

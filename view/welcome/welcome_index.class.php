@@ -11,7 +11,7 @@ class WelcomeIndex extends IndexView
 
     public function display() {
         //display page header
-        parent::displayHeader("Savory Food Homepage");
+        parent::displayHeader();
         ?>
         <div id="main-header">Welcome to Savory Food Recipes!</div>
         <br>

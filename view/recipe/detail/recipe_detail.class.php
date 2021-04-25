@@ -15,11 +15,11 @@ class RecipeDetail extends RecipeIndexView
 
         //retrieve book details by calling get methods
         $id = $recipe->getId();
-        $title = $recipe->getTitle();
+        $Title = $recipe->getTitle();
         $category = $recipe->getCategory();
         $price = $recipe->getPrice();
         $image = $recipe->getImage();
-        $ingredients = $recipe->getIngredients();
+        $ingredients = $recipe->getIngrediants();
         $description = $recipe->getDescription();
 
 
@@ -34,7 +34,7 @@ class RecipeDetail extends RecipeIndexView
         <table id="detail">
             <tr>
                 <td style="width: 150px;">
-                    <img src="<?= $image ?>" alt="<?= $title ?>" />
+                    <img src="<?= $image ?>" alt="<?= $Title ?>" />
                 </td>
                 <td style="width: 130px;">
                     <p><strong>Title:</strong></p>
@@ -47,7 +47,7 @@ class RecipeDetail extends RecipeIndexView
                     </div>
                 </td>
                 <td>
-                    <p><?= $title ?></p>
+                    <p><?= $Title ?></p>
                     <p><?= $category ?></p>
                     <p><?= $description ?></p>
                     <p><?= $ingredients ?></p>

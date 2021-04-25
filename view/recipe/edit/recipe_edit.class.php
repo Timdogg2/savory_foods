@@ -1,7 +1,7 @@
 <?php
 
 
-class RecipeEdit
+class RecipeEdit extends IndexView
 {
     //display a movie in a form for editing
     public function edit($id) {
@@ -25,15 +25,15 @@ class RecipeEdit
 
         //get recipe ratings from a session variable
         if (isset($_SESSION['recipes'])) {
-            $categories = $_SESSION['recipes'];
+            $category = $_SESSION['recipes'];
         }
 
         //retrieve recipe details by calling get methods
         $id = $recipe->getId();
         $title = $recipe->getTitle();
-        $description = $recipe->getRating();
+        $description = $recipe->getDescription();
         $category = $recipe->getCategory();
-        $ingredients = $recipe->getIngredients();
+        $ingrediants = $recipe->getIngrediants();
         $price = $recipe->getPrice();
         $image = $recipe->getImage();
         ?>
@@ -47,20 +47,21 @@ class RecipeEdit
                 <input name="title" type="text" size="100" value="<?= $title ?>" required autofocus></p>
             <p><strong>Category</strong>:
                 <?php
-                foreach ($categories as $m_rating => $m_id) {
-                    $checked = ($category == $m_rating ) ? "checked" : "";
-                    echo "<input type='radio' name='rating' value='$m_id' $checked> $m_rating &nbsp;&nbsp;";
+                //echo gettype($category);
+                foreach ($_SESSION['categories'] as $r_category => $id) {
+                    $checked = ($category == $r_category ) ? "checked" : "";
+                    echo "<input type='radio' name='Category_id' value='$id' $checked> $r_category &nbsp;&nbsp;";
                 }
                 ?>
             </p>
-            <p><strong>Ingrediants</strong>: <input name="release_date" type="date" value="<?= $ingredients ?>" required=""></p>
+            <p><strong>Ingrediants</strong>: <input name="Ingrediants" type="text" value="<?= $ingrediants ?>" required=""></p>
             <p><strong>Price</strong>: Separate directors with commas<br>
                 <input name="director" type="text" size="40" value="<?= $price ?>" required=""></p>
             <p><strong>Image</strong>: url (http:// or https://) or local file including path and file extension<br>
                 <input name="image" type="text" size="100" required value="<?= $image ?>"></p>
             <p><strong>Description</strong>:<br>
                 <textarea name="description" rows="8" cols="100"><?= $description ?></textarea></p>
-            <input type="submit" name="action" value="Update Movie">
+            <input type="submit" name="action" value="Update Recipe">
             <input type="button" value="Cancel" onclick='window.location.href = "<?= BASE_URL . "/recipe/detail/" . $id ?>"'>
         </form>
         <?php

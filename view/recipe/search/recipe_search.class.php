@@ -51,7 +51,7 @@ class RecipeSearch
             }
             ?>
         </div>
-        <a href="<?= BASE_URL ?>/movie/index">Go to movie list</a>
+        <a href="<?= BASE_URL ?>/recipe/index">Go to movie list</a>
         <?php
         //display page footer
         parent::displayFooter();

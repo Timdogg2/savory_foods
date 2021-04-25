@@ -24,12 +24,11 @@ class RecipeIndex extends RecipeIndexView
             if ($recipes === 0) {
                 echo "No recipe was found.<br><br><br><br><br>";
             } else {
-                //display movies in a grid; six movies per row
+                //display recipes in a grid; six recipes per row
                 foreach ($recipes as $i => $recipe) {
                     $id = $recipe->getId();
                     $title = $recipe->getTitle();
                     $category = $recipe->getCategory();
-                    $description = $recipe->getDescription();
                     $image = $recipe->getImage();
                     if (strpos($image, "http://") === false AND strpos($image, "https://") === false) {
                         $image = BASE_URL . "/" . FOOD_IMG . $image;
@@ -39,7 +38,7 @@ class RecipeIndex extends RecipeIndexView
                     }
 
                     echo "<div class='col'><p><a href='", BASE_URL, "/recipe/detail/$id'><img src='" . $image .
-                        "'></a><span>$title<br>Rated $category<br>" . $description() . "</span></p></div>";
+                        "'></a><span>$title<br> $category<br>" . "</span></p></div>";
                     ?>
                     <?php
                     if ($i % 6 == 5 || $i == count($recipes) - 1) {

@@ -6,7 +6,7 @@
  * Description:
  */
 
-class database
+class Database
 {
 //define database parameters
     private $param = array(
@@ -47,17 +47,17 @@ class database
 }
 
     //returns the name of the table that stores movies
-    public function getCategories() {
+    public function getCategoryTable() {
     return $this->param['tblCategories'];
 }
 
     //returns the name of the table that stores books
-    public function getRecipes() {
+    public function getRecipeTable() {
     return $this->param['tblRecipes'];
 }
 
     //returns the name of the table storing games
-    public function getUsers() {
+    public function getUserTable() {
     return $this->param['tblUsers'];
     }
 }

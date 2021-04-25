@@ -10,15 +10,15 @@ class Recipe
 {
 
     //private properties of a Recipe object
-    private $id, $title, $description, $category, $price, $ingredients, $image;
+    private $id, $Title, $description, $ingrediants, $price, $categories, $image;
 
     //the constructor that initializes all properties
-    public function __construct($title, $description, $category, $ingredients, $price, $image) {
-        $this->title = $title;
+    public function __construct($title, $description,  $ingrediants, $price, $categories, $image) {
+        $this->Title = $title;
         $this->description = $description;
-        $this->category = $category;
-        $this->ingredients = $ingredients;
+        $this->ingrediants = $ingrediants;
         $this->price = $price;
+        $this->Category_id = $categories;
         $this->image = $image;
     }
 
@@ -26,15 +26,15 @@ class Recipe
         return $this->id;
     }
     public function getTitle() {
-        return $this->title;
+        return $this->Title;
     }
 
-    public function getIngredients(){
-        return $this->ingredients;
+    public function getIngrediants(){
+        return $this->ingrediants;
     }
 
     public function getCategory() {
-        return $this->category;
+        return $this->Category_id;
     }
 
 
@@ -55,27 +55,27 @@ class Recipe
     public function setId($id){
         $this->id = $id;
     }
-    public function setCategory($category){
-        $this->category = $category;
-    }
-
-    public function setDescription($description){
-        $this->description = $description;
-    }
-
-    public function setImage($image){
-        $this->image = $image;
-    }
-    public function setIngredients($ingredients){
-        $this->ingredients = $ingredients;
-    }
-
-    public function setPrice($price){
-        $this->price = $price;
-    }
-
-    public function setTitle($title){
-        $this->title = $title;
-    }
+//    public function setCategory($categories){
+//        $this->categories = $categories;
+//    }
+//
+//    public function setDescription($description){
+//        $this->description = $description;
+//    }
+//
+//    public function setImage($image){
+//        $this->image = $image;
+//    }
+//    public function setIngredients($ingredients){
+//        $this->ingredients = $ingredients;
+//    }
+//
+//    public function setPrice($price){
+//        $this->price = $price;
+//    }
+//
+//    public function setTitle($title){
+//        $this->title = $title;
+//    }
 
 }

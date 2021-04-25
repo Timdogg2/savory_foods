@@ -12,14 +12,15 @@ class RecipeModel
     private $db;
     private $dbConnection;
     static private $_instance = NULL;
-    private $tblCategory;
     private $tblRecipes;
+    private $tblCategories;
+
 
     //To use singleton pattern, this constructor is made private. To get an instance of the class, the getRecipeModel method must be called.
     private function __construct() {
         $this->db = Database::getDatabase();
         $this->dbConnection = $this->db->getConnection();
-        $this->tblCategory = $this->db->getCategoryTable();
+        $this->tblCategories = $this->db->getCategoryTable();
         $this->tblRecipes = $this->db->getRecipeTable();
 
         //Escapes special characters in a string for use in an SQL statement. This stops SQL inject in POST vars.
@@ -32,10 +33,10 @@ class RecipeModel
             $_GET[$key] = $this->dbConnection->real_escape_string($value);
         }
 
-        //initialize Recipes
-        if (!isset($_SESSION['recipes'])) {
-            $categories = $this->get_category();
-            $_SESSION['recipes'] = $categories;
+//        initialize Recipes
+        if (!isset($_SESSION['categories'])) {
+            $categories = $this->get_recipe_category();
+            $_SESSION['categories'] = $categories;
         }
     }
 
@@ -60,8 +61,9 @@ class RecipeModel
          * WHERE ...
          */
 
-        $sql = "SELECT * FROM " . $this->tblCategory . "," . $this->tblRecipes .
-            " WHERE " . $this->tblCategory . ".Category_id=" . $this->tblRecipes . ".Category_id";
+        $sql = "SELECT * FROM " . $this->tblCategories . "," . $this->tblRecipes .
+            " WHERE " . $this->tblCategories . ".Category_id=" . $this->tblRecipes . ".Category_id";
+
 
         //execute the query
         $query = $this->dbConnection->query($sql);
@@ -80,10 +82,11 @@ class RecipeModel
 
         //loop through all rows in the returned recordsets
         while ($obj = $query->fetch_object()) {
-            $recipe = new Recipe(stripslashes($obj->title), stripslashes($obj->description), stripslashes($obj->ingrediants), stripslashes($obj->price), stripslashes($obj->Category_id), stripslashes($obj->image));
+
+            $recipe = new Recipe(stripslashes($obj->Title), stripslashes($obj->description), stripslashes($obj->ingrediants), stripslashes($obj->price), stripslashes($obj->Category_id), stripslashes($obj->image));
 
             //set the id for the recipe
-            $recipe>setId($obj->id);
+            $recipe->setId($obj->id);
 
             //add the recipe into the array
             $recipes[] = $recipe;
@@ -97,11 +100,11 @@ class RecipeModel
      */
 
     public function view_recipe($id) {
-        //the select ssql statement
-        $sql = "SELECT * FROM " . $this->tblCategory . "," . $this->tblRecipes .
-            " WHERE " . $this->tblRecipes . ".recipes=" . $this->tblRecipes . ".Category_id" .
-            " AND " . $this->tblCategory . ".id='$id'";
-
+        //the select sql statement
+//        $sql = "SELECT * FROM " . $this->tblRecipes . "," . $this->tblCategories .
+//            " WHERE " . $this->tblRecipes . ".recipes=" . $this->tblCategories . ".Category_id" .
+//            " AND " . $this->tblRecipes . ".id='$id'";
+        $sql = "SELECT * FROM " . $this->tblRecipes . " INNER JOIN " . $this->tblCategories . " ON recipes.Category_id=categories.Category_id" . " WHERE " . "id='$id'";
         //execute the query
         $query = $this->dbConnection->query($sql);
 
@@ -109,7 +112,7 @@ class RecipeModel
             $obj = $query->fetch_object();
 
             //create a recipe object
-            $recipe = new Recipe(stripslashes($obj->title), stripslashes($obj->description), stripslashes($obj->ingredients), stripslashes($obj->price), stripslashes($obj->Category_id), stripslashes($obj->image));
+            $recipe = new Recipe(stripslashes($obj->Title), stripslashes($obj->description), stripslashes($obj->ingrediants), stripslashes($obj->price),stripslashes($obj->Category_id), stripslashes($obj->image));
 
             //set the id for the recipe
             $recipe->setId($obj->id);
@@ -120,13 +123,39 @@ class RecipeModel
         return false;
     }
 
+    //the update_recipes method updates an existing recipe in the database. Details of the recipe are posted in a form. Return true if succeeed; false otherwise.
+     public function update_recipe($id){
+        if(!filter_has_var(INPUT_POST, 'Title')||
+        !filter_has_var(INPUT_POST,'description')||
+        !filter_has_var(INPUT_POST, 'ingrediants')||
+        !filter_has_var(INPUT_POST,'price')||
+        !filter_has_var(INPUT_POST,'Category_id')||
+        !filter_has_var(INPUT_POST,'image')) {
+            return false;
+        }
+        //retrieve data for the new recipe; data are sanitized and escaped for security.
+         $title = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST,'Title',FILTER_SANITIZE_STRING)));
+         $description = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST,'description',FILTER_SANITIZE_STRING)));
+         $ingrediants = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST,'ingrediants',FILTER_SANITIZE_STRING)));
+         $price = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST,'price',FILTER_SANITIZE_STRING)));
+         $Category = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST,'Category_id',FILTER_SANITIZE_STRING)));
+         $image = $this->dbConnection->real_escape_string(trim(filter_input(INPUT_POST,'image',FILTER_SANITIZE_STRING)));
+
+         //query string for update
+         $sql = "UPDATE" . $this->tblRecipes .
+             "SET Title='$title', description='$description', ingrediants='$ingrediants', price='$price', Category_id='$Category', image='$image'"
+            . "WHERE id='$id'";
+         //execute the query
+         return $this->dbConnection->query($sql);
+     }
+
 
     //search the database for recipes that match words in titles. Return an array of recipes if succeed; false otherwise.
     public function search_recipe($terms) {
         $terms = explode(" ", $terms); //explode multiple terms into an array
         //select statement for AND serach
-        $sql = "SELECT * FROM " . $this->tblRecipes . "," . $this->tblCategory .
-            " WHERE " . $this->tblRecipes . ".recipe=" . $this->tblCategory . ".category_id AND (1";
+        $sql = "SELECT * FROM " . $this->tblRecipes . "," . $this->tblCategories .
+            " WHERE " . $this->tblRecipes . ".recipe=" . $this->tblCategories . ".Category_id AND (1";
 
         foreach ($terms as $term) {
             $sql .= " AND title LIKE '%" . $term . "%'";
@@ -151,7 +180,7 @@ class RecipeModel
 
         //loop through all rows in the returned recordsets
         while ($obj = $query->fetch_object()) {
-            $recipe = new Recipe($obj->title, $obj->description, $obj->ingredients, $obj->price,$obj->Category_id, $obj->image);
+            $recipe = new Recipe($obj->Title, $obj->description, $obj->ingrediants, $obj->price, $obj->Category_id, $obj->image);
 
             //set the id for the recipe
             $recipes->setId($obj->id);
@@ -164,8 +193,7 @@ class RecipeModel
 
     //get all recipe categories
     private function get_recipe_category() {
-        $sql = "SELECT * FROM " . $this->tblCategory;
-
+        $sql = "SELECT * FROM " . $this->tblCategories;
         //execute the query
         $query = $this->dbConnection->query($sql);
 
@@ -176,7 +204,7 @@ class RecipeModel
         //loop through all rows
         $categories = array();
         while ($obj = $query->fetch_object()) {
-            $category[$obj->category] = $obj->category_id;
+            $categories[$obj->Category_id] = $obj->name;
         }
         return $categories;
     }
